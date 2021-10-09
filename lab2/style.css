@@ -1,0 +1,84 @@
+* {
+  margin: 0;
+  padding: 0;
+  --main-color-white: white;
+  --transpered-white: rgba(255, 255, 255, 0.6);
+  --main-color-green: #d3ff99;
+  --main-color-blue: #99afff;
+  --main-color-dark-green: #315434;
+  font-family: "Apple Chancery", cursive;
+}
+body {
+  display: grid;
+  background-image: url("/imgs/background.jpg");
+  min-height: 100vh;
+  grid-template-columns:
+    minmax(20vh, auto)
+    minmax(80vh, auto);
+}
+aside {
+  display: flex;
+  grid-column: 1;
+  align-items: center;
+  justify-content: right;
+  font-size: 50px;
+  text-align: right;
+  padding-right: 20px;
+  overflow: hidden;
+  color: var(--main-color-dark-green);
+  border-right: 5px dotted var(--main-color-dark-green);
+}
+form {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  min-width: 70%;
+  padding: 20px;
+  background-color: var(--main-color-white);
+  border-radius: 15px;
+  box-shadow: 4px 4px 6px var(--main-color-dark-green);
+}
+input,
+textarea {
+  margin-bottom: 20px;
+  width: 60%;
+  transition-duration: 0.4s;
+  border: 2px solid var(--main-color-dark-green);
+  border-radius: 5px;
+}
+textarea {
+  resize: none;
+}
+
+button {
+  background-color: var(--main-color-dark-green);
+  text-align: center;
+  padding: 0 10px 0 10px;
+  transition-duration: 0.4s;
+  border: none;
+  border-radius: 10px;
+  color: var(--main-color-white);
+  width: 60%;
+}
+button:hover {
+  background-color: var(--main-color-green);
+  color: var(--main-color-dark-green);
+}
+button > p {
+  font-size: 30px;
+}
+#email {
+  min-height: 20%;
+}
+#spinner {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: var(--transpered-white) url("/imgs/spinner.gif") 50% 50% no-repeat;
+}

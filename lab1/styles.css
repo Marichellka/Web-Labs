@@ -81,7 +81,7 @@ nav > ul {
 
 .nav-links > a {
   text-decoration: none;
-  color: black;
+  color: var(--main-black-color);
   padding: 1vh;
 }
 
