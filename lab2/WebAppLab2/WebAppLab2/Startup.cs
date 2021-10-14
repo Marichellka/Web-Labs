@@ -41,7 +41,8 @@ namespace WebAppLab2
 
             services.AddCors(options => 
             options.AddPolicy("Default", builder => builder
-                    .WithOrigins(@"http://localhost:5000")
+                    .WithOrigins(@"http://localhost:5000", @"https://lab2-eight.vercel.app",
+                    @"https://lab2-git-lab2-marichellka.vercel.app", @"https://lab2-marichellka.vercel.app")
                     .AllowAnyMethod()
                     .AllowAnyHeader()));
 
