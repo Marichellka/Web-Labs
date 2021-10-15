@@ -6,9 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ignore-path .gitignore --no-error-on-unmatched-pattern",
-    "lint:fix": "eslint . --fix --ignore-path .gitignore",
-    "format": "prettier . --ignore-path .gitignore",
-    "format:fix": "prettier . --write --ignore-path .gitignore",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier .",
+    "format:fix": "prettier . --write",
     "lint:style": "stylelint \"./**/*.css\" --ignore-path .gitignore",
     "lint:style:fix": "stylelint \"./**/*.css\" --fix ",
     "prepare": "husky install"

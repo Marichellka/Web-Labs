@@ -14,9 +14,8 @@ namespace WebAppLab2.Services
 
         public EmailService(IConfiguration configuration)
         {
-            var credentialsSection = configuration.GetSection("EmailCredential");
-            _email = credentialsSection.GetSection("email").Value;
-            _password = credentialsSection.GetSection("password").Value;
+            _email = configuration["EmailAddress"];
+            _password = configuration["EmailPassword"];
         }
 
         public async Task<bool> TrySendAsync(EmailModel email)
