@@ -29,6 +29,7 @@ function sendRequest(body) {
 			alert(`Done!`);
 		}
 	};
+	document.getElementById('mailForm').reset();
 }
 
 function retriveFormValue(event) {
