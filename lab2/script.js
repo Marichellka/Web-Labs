@@ -22,14 +22,13 @@ function sendRequest(body) {
 			}
 
 			const errorsString = errorsList.join('\n');
-			alert(`Error ${xhr.status}: ${errorsString}`);
+			alert(`Error \n ${xhr.status}: ${errorsString}`);
 		} else if (xhr.status < 200 || xhr.status > 400) {
 			alert(xhr.response);
 		} else {
 			alert(`Done!`);
 		}
 	};
-	document.getElementById('mailForm').reset();
 }
 
 function retriveFormValue(event) {
@@ -44,8 +43,8 @@ function retriveFormValue(event) {
 		EmailAddress: email,
 		Message: message,
 	};
-	console.log('data', data);
 	sendRequest(data);
+	document.getElementById('mailForm').reset();
 }
 
 form.addEventListener('submit', retriveFormValue);
