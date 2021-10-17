@@ -5,6 +5,7 @@
   },
   "extends": ["metarhia"],
   "plugins": ["sonarjs"],
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 12
   },

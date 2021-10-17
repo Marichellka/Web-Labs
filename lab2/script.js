@@ -1,34 +1,37 @@
-'use strict';
-
 const form = document.getElementById('mailForm');
 
-function sendRequest(body) {
-	const xhr = new XMLHttpRequest();
-	xhr.open('POST', 'https://lab2apiemail.azurewebsites.net/email');
-	//xhr.open('POST', 'https://localhost:5003/email');
-	xhr.setRequestHeader('content-type', 'application/json');
-	xhr.send(JSON.stringify(body));
+function sendRequest(data) {
+	const response = fetch('https://lab2apiemail.azurewebsites.net/email', {
+		method: 'POST',
+		mode: 'cors',
+		cache: 'no-cache',
+		credentials: 'same-origin',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		redirect: 'follow',
+		referrerPolicy: 'no-referrer',
+		body: JSON.stringify(data),
+	});
 
-	xhr.onload = function() {
-		document.getElementById('spinner').style.display = 'none';
-		if (xhr.status === 400) {
-			const { errors } = JSON.parse(xhr.response);
-			const errorsList = [];
+	document.getElementById('spinner').style.display = 'none';
+	if (response.status === 400) {
+		const { errors } = response.json();
+		const errorsList = [];
 
-			for (const key in errors) {
-				for (const error of errors[key]) {
-					errorsList.push(error);
-				}
+		for (const key in errors) {
+			for (const error of errors[key]) {
+				errorsList.push(error);
 			}
-
-			const errorsString = errorsList.join('\n');
-			alert(`Error \n ${xhr.status}: ${errorsString}`);
-		} else if (xhr.status < 200 || xhr.status > 400) {
-			alert(xhr.response);
-		} else {
-			alert(`Done!`);
 		}
-	};
+
+		const errorsString = errorsList.join('\n');
+		alert(`Error ${response.status}:\n${errorsString}`);
+	} else if (response.status < 200 || response.status > 400) {
+		alert(`Error ${response.status}`);
+	} else if (response.status >= 200 || response.status < 300) {
+		alert(`Done!`);
+	}
 }
 
 function retriveFormValue(event) {
@@ -43,8 +46,8 @@ function retriveFormValue(event) {
 		EmailAddress: email,
 		Message: message,
 	};
-	sendRequest(data);
 	document.getElementById('mailForm').reset();
+	sendRequest(data);
 }
 
 form.addEventListener('submit', retriveFormValue);
