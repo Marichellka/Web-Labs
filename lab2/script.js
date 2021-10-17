@@ -11,11 +11,15 @@ function sendRequest(data) {
 		},
 		redirect: 'follow',
 		referrerPolicy: 'no-referrer',
-		body: JSON.stringify(data),
-	}).then(response => response.json())
-		.then(result => {
-			if (result.status === 400) {
-				const { errors } = result;
+		body: JSON.stringify(data) })
+		.then(response => response.json())
+		.then(() => {
+			alert(`Done!`);
+			document.getElementById('spinner').style.display = 'none';
+		})
+		.catch(error => {
+			if (error.status === 400) {
+				const { errors } = error;
 				const errorsList = [];
 
 				for (const key in errors) {
@@ -25,17 +29,11 @@ function sendRequest(data) {
 				}
 
 				const errorsString = errorsList.join('\n');
-				alert(`Error ${result.status}:\n${errorsString}`);
-				document.getElementById('spinner').style.display = 'none';
-			} else if (result.status < 200 || result.status > 400) {
-				alert(`Error ${result.status}`);
-				document.getElementById('spinner').style.display = 'none';
-			} else if (result.status >= 200 || result.status < 300) {
-				alert(`Done!`);
-				document.getElementById('spinner').style.display = 'none';
+				alert(`Error ${error.status}:\n${errorsString}`);
+
+			} else {
+				alert(`Error ${error}`);
 			}
-		}).catch(error => {
-			alert(`Error ${error}`);
 			document.getElementById('spinner').style.display = 'none';
 		});
 }
