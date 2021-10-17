@@ -14,7 +14,6 @@ function sendRequest(data) {
 		body: JSON.stringify(data),
 	});
 
-	document.getElementById('spinner').style.display = 'none';
 	if (response.status === 400) {
 		const { errors } = response.json();
 		const errorsList = [];
@@ -27,10 +26,13 @@ function sendRequest(data) {
 
 		const errorsString = errorsList.join('\n');
 		alert(`Error ${response.status}:\n${errorsString}`);
+		document.getElementById('spinner').style.display = 'none';
 	} else if (response.status < 200 || response.status > 400) {
 		alert(`Error ${response.status}`);
+		document.getElementById('spinner').style.display = 'none';
 	} else if (response.status >= 200 || response.status < 300) {
 		alert(`Done!`);
+		document.getElementById('spinner').style.display = 'none';
 	}
 }
 
