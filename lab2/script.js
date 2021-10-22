@@ -14,7 +14,7 @@ function sendRequest(data) {
 		body: JSON.stringify(data) })
 		.then(response => {
 			if (response.status === 400) {
-				const { errors } = response.json;
+				const { errors } = response.json();
 				const errorsList = [];
 
 				for (const key in errors) {
@@ -26,14 +26,14 @@ function sendRequest(data) {
 				const errorsString = errorsList.join('\n');
 				alert(`Error ${response.status}:\n${errorsString}`);
 			} else if (!response.ok) {
-				alert(`Error ${response.status}`);
+				alert(`Error ${response.status}: ${response.statusText}`);
 			} else {
 				alert(`Done!`);
 			}
 			document.getElementById('spinner').style.display = 'none';
 		})
-		.catch(error => {
-			alert(`Error ${error}`);
+		.catch(() => {
+			alert(`Network error. Please try again`);
 			document.getElementById('spinner').style.display = 'none';
 		});
 }
