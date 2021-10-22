@@ -14,20 +14,18 @@ function sendRequest(data) {
 		body: JSON.stringify(data) })
 		.then(response => {
 			if (response.status === 400) {
-				const { errors } = response.statusText;
-				const errorsList = [];
-
-				for (const key in errors) {
-					for (const error of errors[key]) {
-						errorsList.push(error);
-					}
-				}
-
-				const errorsString = errorsList.join('\n');
-				alert(`Error ${response.status}:\n${errorsString}`);
-				alert(`Error ${response.status}: ${response.statusText}`);
+				response.json()
+					.then(data => {
+						const errorsList = [];
+						for (const key in data) {
+							for (const error of data[key]) {
+								errorsList.push(error);
+							}
+						}
+						const errorsString = errorsList.join('\n');
+						alert(`Error ${response.status}:\n${errorsString}`);
+					});
 			} else if (!response.ok) {
-
 				alert(`Error ${response.status}: ${response.statusText}`);
 			} else {
 				alert(`Done!`);
