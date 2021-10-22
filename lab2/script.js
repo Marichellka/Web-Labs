@@ -1,7 +1,7 @@
 const form = document.getElementById('mailForm');
 
 function sendRequest(data) {
-	const response = fetch('https://lab2apiemail.azurewebsites.net/email', {
+	fetch('https://lab2apiemail.azurewebsites.net/email', {
 		method: 'POST',
 		mode: 'cors',
 		cache: 'no-cache',
@@ -11,27 +11,32 @@ function sendRequest(data) {
 		},
 		redirect: 'follow',
 		referrerPolicy: 'no-referrer',
-		body: JSON.stringify(data),
-	});
-
-	document.getElementById('spinner').style.display = 'none';
-	if (response.status === 400) {
-		const { errors } = response.json();
-		const errorsList = [];
-
-		for (const key in errors) {
-			for (const error of errors[key]) {
-				errorsList.push(error);
+		body: JSON.stringify(data) })
+		.then(response => {
+			if (response.status === 400) {
+				response.json()
+					.then(data => {
+						const { errors } = data;
+						const errorsList = [];
+						for (const key in errors) {
+							for (const error of errors[key]) {
+								errorsList.push(error);
+							}
+						}
+						const errorsString = errorsList.join('\n');
+						alert(`Error ${response.status}:\n${errorsString}`);
+					});
+			} else if (!response.ok) {
+				alert(`Error ${response.status}: ${response.statusText}`);
+			} else {
+				alert(`Done!`);
 			}
-		}
-
-		const errorsString = errorsList.join('\n');
-		alert(`Error ${response.status}:\n${errorsString}`);
-	} else if (response.status < 200 || response.status > 400) {
-		alert(`Error ${response.status}`);
-	} else if (response.status >= 200 || response.status < 300) {
-		alert(`Done!`);
-	}
+			document.getElementById('spinner').style.display = 'none';
+		})
+		.catch(() => {
+			alert(`Network error. Please try again`);
+			document.getElementById('spinner').style.display = 'none';
+		});
 }
 
 function retriveFormValue(event) {
