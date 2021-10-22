@@ -12,14 +12,9 @@ function sendRequest(data) {
 		redirect: 'follow',
 		referrerPolicy: 'no-referrer',
 		body: JSON.stringify(data) })
-		.then(response => response.json())
-		.then(() => {
-			alert(`Done!`);
-			document.getElementById('spinner').style.display = 'none';
-		})
-		.catch(error => {
-			if (error.status === 400) {
-				const { errors } = error;
+		.then(response => {
+			if (response.status === 400) {
+				const { errors } = response.json;
 				const errorsList = [];
 
 				for (const key in errors) {
@@ -29,11 +24,16 @@ function sendRequest(data) {
 				}
 
 				const errorsString = errorsList.join('\n');
-				alert(`Error ${error.status}:\n${errorsString}`);
-
+				alert(`Error ${response.status}:\n${errorsString}`);
+			} else if (!response.ok) {
+				alert(`Error ${response.status}`);
 			} else {
-				alert(`Error ${error}`);
+				alert(`Done!`);
 			}
+			document.getElementById('spinner').style.display = 'none';
+		})
+		.catch(error => {
+			alert(`Error ${error}`);
 			document.getElementById('spinner').style.display = 'none';
 		});
 }
