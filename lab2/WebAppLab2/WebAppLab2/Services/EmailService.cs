@@ -11,11 +11,13 @@ namespace WebAppLab2.Services
     {
         private readonly string _email;
         private readonly string _password;
+        private readonly string _client;
 
         public EmailService(IConfiguration configuration)
         {
             _email = configuration["EmailAddress"];
             _password = configuration["EmailPassword"];
+            _client = configuration["Client"];
         }
 
         public async Task<bool> TrySendAsync(EmailModel email)
@@ -23,7 +25,7 @@ namespace WebAppLab2.Services
             bool isSuccessful = true;
             try
             {
-                System.Net.Mail.SmtpClient client = new("smtp.gmail.com", 587)
+                System.Net.Mail.SmtpClient client = new(_client, 587)
                 {
                     Credentials = new NetworkCredential(_email, _password),
                     DeliveryMethod = SmtpDeliveryMethod.Network,

@@ -1,11 +1,29 @@
-const form = document.getElementById('mailForm');
+const form = document.querySelector('.mailForm');
+
+function showMessage(message) {
+	const divMes = document.querySelector('.none');
+	divMes.className = 'alertMessage';
+	const mess = document.createTextNode(message);
+	divMes.appendChild(mess);
+	const span = document.createElement('SPAN');
+	const txt = document.createTextNode('OK');
+	span.className = 'submit';
+	span.appendChild(txt);
+	divMes.appendChild(span);
+
+	span.onclick = function() {
+		const div = this.parentElement;
+		while (div.firstChild) {
+			div.removeChild(div.lastChild);
+		}
+		div.className = 'none';
+		document.querySelector('.spinner').className = 'noneSpinner';
+	};
+}
 
 function sendRequest(data) {
 	fetch('https://lab2apiemail.azurewebsites.net/email', {
 		method: 'POST',
-		mode: 'cors',
-		cache: 'no-cache',
-		credentials: 'same-origin',
 		headers: {
 			'Content-Type': 'application/json',
 		},
@@ -24,34 +42,30 @@ function sendRequest(data) {
 							}
 						}
 						const errorsString = errorsList.join('\n');
-						alert(`Error ${response.status}:\n${errorsString}`);
+						showMessage(`Error ${response.status}:\n
+							${errorsString}`);
 					});
-			} else if (!response.ok) {
-				alert(`Error ${response.status}: ${response.statusText}`);
 			} else {
-				alert(`Done!`);
+				showMessage(`Done!`);
 			}
-			document.getElementById('spinner').style.display = 'none';
 		})
 		.catch(() => {
-			alert(`Network error. Please try again`);
-			document.getElementById('spinner').style.display = 'none';
+			showMessage(`Network error. Please try again`);
 		});
 }
 
 function retriveFormValue(event) {
 	event.preventDefault();
-	document.getElementById('spinner').style.display = 'block';
-	const email = document.getElementById('email').value,
-		name = document.getElementById('name').value,
-		message = document.getElementById('message').value;
-
+	document.querySelector('.noneSpinner').className = 'spinner';
+	const elements = form.elements;
+	const email = elements['email'].value,
+		name = elements['name'].value,
+		message = elements['messageText'].value;
 	const data = {
 		Name: name,
 		EmailAddress: email,
 		Message: message,
 	};
-	document.getElementById('mailForm').reset();
 	sendRequest(data);
 }
 

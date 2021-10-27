@@ -15,10 +15,12 @@ body {
   grid-template-columns:
     minmax(20vh, auto)
     minmax(80vh, auto);
+  grid-template-rows: minmax(100vh, auto);
 }
 aside {
   display: flex;
   grid-column: 1;
+  grid-row: 1;
   align-items: center;
   justify-content: right;
   font-size: 50px;
@@ -28,8 +30,9 @@ aside {
   color: var(--main-color-dark-green);
   border-right: 5px dotted var(--main-color-dark-green);
 }
-form {
+.mailForm {
   grid-column: 2;
+  grid-row: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,7 +55,7 @@ textarea {
   resize: none;
 }
 
-button {
+.submit {
   background-color: var(--main-color-dark-green);
   text-align: center;
   padding: 0 10px 0 10px;
@@ -62,18 +65,18 @@ button {
   color: var(--main-color-white);
   width: 60%;
 }
-button:hover {
+.submit:hover {
   background-color: var(--main-color-green);
   color: var(--main-color-dark-green);
 }
-button > p {
+.submit > p {
   font-size: 30px;
 }
 #email {
   min-height: 20%;
 }
-#spinner {
-  display: none;
+.spinner {
+  display: block;
   position: fixed;
   z-index: 1000;
   top: 0;
@@ -81,4 +84,21 @@ button > p {
   height: 100%;
   width: 100%;
   background: var(--transpered-white) url("/imgs/spinner.gif") 50% 50% no-repeat;
+}
+.alertMessage{
+  display: flex;
+  margin: auto;
+  padding: 20px;
+  grid-column: 1/3;
+  grid-row: 1;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2000;
+  white-space: pre-line;
+  background-color: var(--main-color-white);
+  border-radius: 15px;
+  box-shadow: 4px 4px 6px var(--main-color-dark-green);
+}
+.none, .noneSpinner{
+  display: none;
 }

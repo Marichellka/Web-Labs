@@ -15,20 +15,20 @@
         sender!
       </p>
     </aside>
-    <form id="mailForm" method="POST" action="">
-      <input type="text" id="name" placeholder="Name" />
-      <input type="email" id="email" placeholder="Email Address" />
+    <form class="mailForm">
+      <input type="text" name="name" placeholder="Name" />
+      <input type="email" name="email" placeholder="Email Address" />
       <textarea
         placeholder="Message text..."
-        id="message"
-        form="mailForm"
+        name="messageText"
         rows="5"
       ></textarea>
-      <button type="submit">
+      <button type="submit" class="submit">
         <p>Send!</p>
       </button>
     </form>
-    <div id="spinner"></div>
+    <div class="noneSpinner"></div>
+    <div class="none"></div>
     <script src="/script.js"></script>
   </body>
 </html>
