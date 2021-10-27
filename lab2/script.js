@@ -32,19 +32,18 @@ function sendRequest(data) {
 		body: JSON.stringify(data) })
 		.then(response => {
 			if (response.status === 400) {
-				response.json()
-					.then(data => {
-						const { errors } = data;
-						const errorsList = [];
-						for (const key in errors) {
-							for (const error of errors[key]) {
-								errorsList.push(error);
-							}
+				response.json().then(data => {
+					const { errors } = data;
+					const errorsList = [];
+					for (const key in errors) {
+						for (const error of errors[key]) {
+							errorsList.push(error);
 						}
-						const errorsString = errorsList.join('\n');
-						showMessage(`Error ${response.status}:\n
-							${errorsString}`);
-					});
+					}
+					const errorsString = errorsList.join('\n');
+					showMessage(`Error ${response.status}:\n
+						${errorsString}`);
+				});
 			} else {
 				showMessage(`Done!`);
 			}
