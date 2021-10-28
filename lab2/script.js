@@ -42,6 +42,8 @@ function sendRequest(data) {
 					showMessage(`Error ${response.status}:
 						${errorsString}`);
 				});
+			} else if (!response.ok) {
+				showMessage(`Error ${response.statusText}`);
 			} else {
 				showMessage(`Done!`);
 			}
