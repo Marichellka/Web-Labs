@@ -27,8 +27,6 @@ function sendRequest(data) {
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		redirect: 'follow',
-		referrerPolicy: 'no-referrer',
 		body: JSON.stringify(data) })
 		.then(response => {
 			if (response.status === 400) {
@@ -41,7 +39,7 @@ function sendRequest(data) {
 						}
 					}
 					const errorsString = errorsList.join('\n');
-					showMessage(`Error ${response.status}:\n
+					showMessage(`Error ${response.status}:
 						${errorsString}`);
 				});
 			} else {
@@ -57,14 +55,13 @@ function retriveFormValue(event) {
 	event.preventDefault();
 	document.querySelector('.noneSpinner').className = 'spinner';
 	const elements = form.elements;
-	const email = elements['email'].value,
-		name = elements['name'].value,
-		message = elements['messageText'].value;
-	const data = {
-		Name: name,
-		EmailAddress: email,
-		Message: message,
-	};
+	const data = {};
+	for (const element of elements) {
+		console.log(element.name);
+		console.log(element.value);
+		data[element.name] = element.value;
+	}
+	delete data[''];
 	sendRequest(data);
 }
 
