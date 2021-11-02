@@ -1,23 +1,26 @@
-using System.Threading.Tasks;
-using WebAppLab2.Models;
-using Microsoft.Extensions.Configuration;
+using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Mail;
-using System;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using WebAppLab2.Models;
 
 namespace WebAppLab2.Services
 {
     public class EmailService
     {
-        private readonly string _email;
-        private readonly string _password;
-        private readonly string _client;
+        private readonly string email;
+
+        private readonly string password;
+
+        private readonly string client;
 
         public EmailService(IConfiguration configuration)
         {
-            _email = configuration["EmailAddress"];
-            _password = configuration["EmailPassword"];
-            _client = configuration["Client"];
+            this.email = configuration["EmailAddress"];
+            this.password = configuration["EmailPassword"];
+            this.client = configuration["Client"];
         }
 
         public async Task<bool> TrySendAsync(EmailModel email)
@@ -25,19 +28,19 @@ namespace WebAppLab2.Services
             bool isSuccessful = true;
             try
             {
-                System.Net.Mail.SmtpClient client = new(_client, 587)
+                System.Net.Mail.SmtpClient client = new (this.client, 587)
                 {
-                    Credentials = new NetworkCredential(_email, _password),
+                    Credentials = new NetworkCredential(this.email, this.password),
                     DeliveryMethod = SmtpDeliveryMethod.Network,
-                    EnableSsl = true
+                    EnableSsl = true,
                 };
 
-                MailMessage mail = new()
+                MailMessage mail = new ()
                 {
-                    From = new MailAddress(_email, email.Name),
+                    From = new MailAddress(this.email, email.Name),
                     Body = email.Message,
                     To = { email.EmailAddress },
-                    IsBodyHtml = true
+                    IsBodyHtml = true,
                 };
 
                 await client.SendMailAsync(mail);

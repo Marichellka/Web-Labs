@@ -1,3 +1,5 @@
+import config from './config.js';
+
 const form = document.querySelector('.mailForm');
 
 function showMessage(message) {
@@ -22,7 +24,7 @@ function showMessage(message) {
 }
 
 function sendRequest(data) {
-	fetch('https://lab2apiemail.azurewebsites.net/email', {
+	fetch(config['address'], {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -42,15 +44,15 @@ function sendRequest(data) {
 					showMessage(`Error ${response.status}:
 						${errorsString}`);
 				});
-			} else if (!response.ok) {
-				showMessage(`Error ${response.statusText}`);
-			} else {
-				showMessage(`Done!`);
+				return;
 			}
+			if (!response.ok) {
+				showMessage(`Error ${response.statusText}`);
+				return;
+			}
+			showMessage(`Done!`);
 		})
-		.catch(() => {
-			showMessage(`Network error. Please try again`);
-		});
+		.catch(() => showMessage(`Network error. Please try again`));
 }
 
 function retriveFormValue(event) {

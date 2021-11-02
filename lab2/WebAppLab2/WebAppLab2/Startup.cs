@@ -21,9 +21,11 @@ namespace WebAppLab2
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            string[] Origins = configuration["CORS Origin"].Split(';').ToArray();
         }
 
         public IConfiguration Configuration { get; }
+        public string[] Origins { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -41,8 +43,7 @@ namespace WebAppLab2
 
             services.AddCors(options => 
             options.AddPolicy("Default", builder => builder
-                    .WithOrigins(@"http://localhost:5000", @"https://lab2-eight.vercel.app",
-                    @"https://lab2-git-lab2-marichellka.vercel.app", @"https://lab2-marichellka.vercel.app")
+                    .WithOrigins(Origins)
                     .AllowAnyMethod()
                     .AllowAnyHeader()));
 
