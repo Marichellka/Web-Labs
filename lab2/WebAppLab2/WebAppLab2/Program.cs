@@ -17,7 +17,7 @@ namespace WebAppLab2
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((context, config) =>
                 {
-                    var keyVaultEndpoint = new Uri(GetKeyVaultEndPoint());
+                    var keyVaultEndpoint = new Uri(KeyVaultEndPoint);
                     config.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
@@ -25,6 +25,6 @@ namespace WebAppLab2
                     webBuilder.UseStartup<Startup>();
                 });
 
-        public static string GetKeyVaultEndPoint() => "https://keyslab2.vault.azure.net/";
+        private const string KeyVaultEndPoint = "https://keyslab2.vault.azure.net/";
     }
 }

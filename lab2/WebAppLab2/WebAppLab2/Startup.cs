@@ -21,7 +21,7 @@ namespace WebAppLab2
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            Origins = configuration["CORS Origin"].Split(';').ToArray();
+            Origins = configuration["CORS Origins"].Split(';').ToArray();
         }
 
         public IConfiguration Configuration { get; }
@@ -41,11 +41,18 @@ namespace WebAppLab2
 
             services.AddInMemoryRateLimiting();
 
-            services.AddCors(options => 
-            options.AddPolicy("Default", builder => builder
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Production", builder => builder
                     .WithOrigins(Origins)
                     .AllowAnyMethod()
-                    .AllowAnyHeader()));
+                    .AllowAnyHeader());
+
+                options.AddPolicy("Development", builder => builder
+                    .WithOrigins("http://localhost:5000")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
 
             services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
             services.AddScoped<EmailService>();
@@ -61,9 +68,12 @@ namespace WebAppLab2
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAppLab2 v1"));
+                app.UseCors("Development");
             }
-
-            app.UseCors("Default");
+            else
+            {
+                app.UseCors("Production");
+            }
 
             app.UseHttpsRedirection();
 
