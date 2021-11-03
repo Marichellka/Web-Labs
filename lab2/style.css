@@ -10,7 +10,7 @@
 }
 body {
   display: grid;
-  background-image: url("/imgs/background.jpg");
+  background-image: url("./imgs/background.jpg");
   min-height: 100vh;
   grid-template-columns:
     minmax(20vh, auto)
@@ -83,7 +83,7 @@ textarea {
   left: 0;
   height: 100%;
   width: 100%;
-  background: var(--transpered-white) url("/imgs/spinner.gif") 50% 50% no-repeat;
+  background: var(--transpered-white) url("./imgs/spinner.gif") 50% 50% no-repeat;
 }
 .alertMessage{
   display: flex;

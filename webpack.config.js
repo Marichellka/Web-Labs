@@ -23,6 +23,33 @@ module.exports = {
 				exclude: /node_modules/,
 				loader: require.resolve('babel-loader'),
 			},
+			{
+				test: /\.css$/,
+				exclude: /node_modules/,
+				use: [
+					'style-loader',
+					{
+						loader: 'css-loader',
+						options: {
+							url: false,
+						},
+					},
+				],
+			},
+			{
+				test: /.png|svg|jpg|gif$/,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							publicPath: path.resolve(__dirname, './imgs'),
+							outputPath: '/imgs',
+							name: '[name].[ext]',
+							useRelativePaths: true,
+						},
+					},
+				],
+			},
 		],
 	},
 };

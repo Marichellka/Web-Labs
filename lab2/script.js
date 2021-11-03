@@ -1,4 +1,7 @@
 import config from './config.js';
+import './imgs/background.jpg';
+import './imgs/spinner.gif';
+import './style.css';
 
 const form = document.querySelector('.mailForm');
 
