@@ -21,7 +21,7 @@ namespace WebAppLab2
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            string[] Origins = configuration["CORS Origin"].Split(';').ToArray();
+            Origins = configuration["CORS Origin"].Split(';').ToArray();
         }
 
         public IConfiguration Configuration { get; }
