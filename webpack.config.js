@@ -2,14 +2,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-	entry: './lab2/script.js',
+	entry: './lab3/scripts/script.js',
 	output: {
 		filename: 'bundle.[hash].js',
-		path: path.resolve(__dirname, './lab2/dist'),
+		path: path.resolve(__dirname, './lab3/dist'),
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: './lab2/index.html',
+			template: './lab3/index.html',
 		}),
 	],
 	resolve: {
