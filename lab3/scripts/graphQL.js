@@ -31,7 +31,6 @@ export function subscribeToChanges() {
 		],
 	});
 
-	//const {unsubscribe}=
 	pipe(
 		client.subscription(config['subscription']),
 		subscribe(result => {
