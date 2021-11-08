@@ -8,7 +8,7 @@ import { pipe, subscribe } from 'wonka';
 
 export function subscribeToChanges() {
 	const subscriptionClient = new SubscriptionClient(
-		'ws://weblab3.hasura.app/v1/graphql',
+		'wss://weblab3.hasura.app/v1/graphql',
 		{
 			reconnect: true,
 			connectionParams: {
