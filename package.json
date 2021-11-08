@@ -12,7 +12,8 @@
     "lint:style": "stylelint \"./**/*.css\" --ignore-path .gitignore",
     "lint:style:fix": "stylelint \"./**/*.css\" --fix --ignore-path .gitignore",
     "prepare": "husky install",
-    "build": "webpack --config webpack.config.js --mode production"
+    "build": "webpack --config webpack.config.js --mode production",
+    "deploy": "serve -s build"
   },
   "repository": {
     "type": "git",
