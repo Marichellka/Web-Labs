@@ -1,9 +1,8 @@
-﻿using System;
+﻿using System.Net.Mail;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using WebAppLab2.Models;
 using WebAppLab2.Services;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using System.Net.Mail;
 
 namespace WebAppLab2.Controllers
 {
@@ -27,7 +26,7 @@ namespace WebAppLab2.Controllers
 
             MailAddress address = new MailAddress(mail.EmailAddress);
 
-            if(!await _emailService.TrySendAsync(mail))
+            if (!await _emailService.TrySendAsync(mail))
             {
                 return StatusCode(500);
             }

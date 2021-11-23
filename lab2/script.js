@@ -4,25 +4,28 @@ import './imgs/spinner.gif';
 import './style.css';
 
 const form = document.querySelector('.mailForm');
+const spinner = document.querySelector('.noneSpinner');
+const messBox = document.querySelector('.none');
 
 function showMessage(message) {
-	const divMes = document.querySelector('.none');
-	divMes.className = 'alertMessage';
+	messBox.classList.add('alertMessage');
+	messBox.classList.remove('none');
 	const mess = document.createTextNode(message);
-	divMes.appendChild(mess);
+	messBox.appendChild(mess);
 	const span = document.createElement('SPAN');
 	const txt = document.createTextNode('OK');
 	span.className = 'submit';
 	span.appendChild(txt);
-	divMes.appendChild(span);
+	messBox.appendChild(span);
 
 	span.onclick = function() {
-		const div = this.parentElement;
-		while (div.firstChild) {
-			div.removeChild(div.lastChild);
+		while (messBox.firstChild) {
+			messBox.removeChild(messBox.lastChild);
 		}
-		div.className = 'none';
-		document.querySelector('.spinner').className = 'noneSpinner';
+		messBox.classList.remove('alertMessage');
+		messBox.classList.add('none');
+		spinner.classList.add('noneSpinner');
+		spinner.classList.remove('spinner');
 	};
 }
 
@@ -34,7 +37,7 @@ function sendRequest(data) {
 		},
 		body: JSON.stringify(data) })
 		.then(response => {
-			if (response.status === 400) {
+			if (!response.ok) {
 				response.json().then(data => {
 					const { errors } = data;
 					const errorsList = [];
@@ -49,27 +52,23 @@ function sendRequest(data) {
 				});
 				return;
 			}
-			if (!response.ok) {
-				showMessage(`Error ${response.statusText}`);
-				return;
-			}
 			showMessage(`Done!`);
 		})
 		.catch(() => showMessage(`Network error. Please try again`));
 }
 
-function retriveFormValue(event) {
-	event.preventDefault();
-	document.querySelector('.noneSpinner').className = 'spinner';
+function retriveFormValue() {
+	spinner.classList.remove('noneSpinner');
+	spinner.classList.add('spinner');
 	const elements = form.elements;
 	const data = {};
 	for (const element of elements) {
-		console.log(element.name);
-		console.log(element.value);
 		data[element.name] = element.value;
 	}
-	delete data[''];
 	sendRequest(data);
 }
 
-form.addEventListener('submit', retriveFormValue);
+document.querySelector('submit').onclick = function() {
+	retriveFormValue();
+};
+

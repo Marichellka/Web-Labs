@@ -72,9 +72,6 @@ textarea {
 .submit > p {
   font-size: 30px;
 }
-#email {
-  min-height: 20%;
-}
 .spinner {
   display: block;
   position: fixed;
