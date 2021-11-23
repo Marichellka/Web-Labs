@@ -19,9 +19,7 @@ function showMessage(message) {
 	messBox.appendChild(span);
 
 	span.onclick = function() {
-		while (messBox.firstChild) {
-			messBox.removeChild(messBox.lastChild);
-		}
+		messBox.replaceChildren();
 		messBox.classList.remove('alertMessage');
 		messBox.classList.add('none');
 		spinner.classList.add('noneSpinner');
@@ -40,13 +38,10 @@ function sendRequest(data) {
 			if (!response.ok) {
 				response.json().then(data => {
 					const { errors } = data;
-					const errorsList = [];
-					for (const key in errors) {
-						for (const error of errors[key]) {
-							errorsList.push(error);
-						}
-					}
-					const errorsString = errorsList.join('\n');
+					const arrayErrors = Object.values(errors);
+					const errorsString = arrayErrors
+						.reduce((previousValue, currentValue) =>
+							previousValue + currentValue.join('\n') + '\n', '');
 					showMessage(`Error ${response.status}:
 						${errorsString}`);
 				});
@@ -68,7 +63,7 @@ function retriveFormValue() {
 	sendRequest(data);
 }
 
-document.querySelector('submit').onclick = function() {
+document.querySelector('.submit').onclick = function() {
 	retriveFormValue();
 };
 
