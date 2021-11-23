@@ -35,7 +35,7 @@ function sendRequest(data) {
 		},
 		body: JSON.stringify(data) })
 		.then(response => {
-			if (!response.ok) {
+			if (response.status === 400) {
 				response.json().then(data => {
 					const { errors } = data;
 					const arrayErrors = Object.values(errors);
@@ -45,6 +45,15 @@ function sendRequest(data) {
 					showMessage(`Error ${response.status}:
 						${errorsString}`);
 				});
+				return;
+			}
+			if (response.status === 429) {
+				showMessage(`Error ${response.status}: 
+					${response.statusText}`);
+				return;
+			}
+			if (!response.ok) {
+				showMessage(`Error ${response.status}`);
 				return;
 			}
 			showMessage(`Done!`);
