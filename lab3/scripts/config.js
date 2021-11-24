@@ -1,4 +1,5 @@
 export const config = {
+	'address': 'weblab3.hasura.app/v1/graphql',
 	'secret': 'qc4NyGz22znlelB4fq5LK522rj9A1BJD5gkLqxN5yze' +
 	'XLhjuowoThnP70QAabvfw',
 	'doc': `query getList {

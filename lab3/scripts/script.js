@@ -5,9 +5,10 @@ import './../style.css';
 const form = document.querySelector('.toDoForm');
 const formElements = form.elements;
 form.addEventListener('submit', newElement);
+const ul = document.querySelector('.list');
+const spinner = document.querySelector('.noneSpinner');
 
 export function displayList(list) {
-	const ul = document.querySelector('.list');
 	while (ul.firstChild) {
 		ul.removeChild(ul.lastChild);
 	}
@@ -38,7 +39,6 @@ function newElement(event) {
 	const li = document.createElement('li');
 	const inputValue = formElements['taskName'].value;
 	const t = document.createTextNode(inputValue);
-	const ul = document.querySelector('.list');
 	li.appendChild(t);
 	if (inputValue === '') {
 		alert('You must write something!');
@@ -63,16 +63,16 @@ function newElement(event) {
 }
 
 function deleteTask(obj) {
-	const div = obj.parentElement;
-	const taskName = div.childNodes.item(0).nodeValue;
+	const divTask = obj.parentElement;
+	const taskName = divTask.childNodes.item(0).nodeValue;
 	startExecuteTask('deleteTask', { taskName });
-	div.className = 'none';
+	ul.removeChild(divTask);
 }
 
-document.querySelector('.noneSpinner').className = 'spinner';
+spinner.className = 'spinner';
 startExecuteTask('getList', {}).then(data => {
 	displayList(data.ToDoList);
-	document.querySelector('.spinner').className = 'noneSpinner';
+	spinner.className = 'noneSpinner';
 });
 subscribeToChanges();
 
