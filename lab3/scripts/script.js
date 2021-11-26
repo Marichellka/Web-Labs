@@ -7,7 +7,6 @@ const formElements = form.elements;
 form.addEventListener('submit', newElement);
 const ul = document.querySelector('.list');
 const spinner = document.querySelector('.noneSpinner');
-console.log(process.env.HASURA_SECRET);
 
 export function displayList(list) {
 	while (ul.firstChild) {
