@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
 	entry: './lab3/scripts/script.js',
@@ -11,6 +12,7 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: './lab3/index.html',
 		}),
+		new Dotenv(),
 	],
 	resolve: {
 		modules: [__dirname, 'src', 'node_modules'],

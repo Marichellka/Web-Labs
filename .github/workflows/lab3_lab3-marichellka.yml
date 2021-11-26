@@ -14,6 +14,10 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
+            -name: Get GitHub Secrets as an environment variable
+            env:
+              HASURA_SECRET: ${{secrets.HASURA_SECRET}}
+
             - uses: actions/checkout@v2
               with:
                   node-version: '16.x'

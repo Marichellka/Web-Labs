@@ -5,7 +5,6 @@ import { createClient as CreateClient, defaultExchanges,
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { pipe, subscribe } from 'wonka';
 
-
 export function subscribeToChanges() {
 	const subscriptionClient = new SubscriptionClient(
 		'wss://' + config['address'],
@@ -66,7 +65,7 @@ async function fetchGraphQL(operationName, variables) {
 function getHeaders() {
 	return {
 		'Content-Type': 'application/json',
-		'x-hasura-admin-secret': config['secret'],
+		'x-hasura-admin-secret': process.env.HASURA_SECRET,
 	};
 }
 
