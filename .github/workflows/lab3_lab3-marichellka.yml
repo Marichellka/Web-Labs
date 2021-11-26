@@ -28,14 +28,14 @@ jobs:
               run: |
                   npm install
                   npm run build --if-present
+              env:
+                HASURA_SECRET: ${{secrets.HASURA_SECRET}}
+
             - name: Upload artifact for deployment job
               uses: actions/upload-artifact@v2
               with:
                   name: node-app
                   path: lab3/dist
-            -name: Get GitHub Secrets as an environment variable
-            env:
-              HASURA_SECRET: ${{secrets.HASURA_SECRET}}
 
     deploy:
         runs-on: ubuntu-latest
