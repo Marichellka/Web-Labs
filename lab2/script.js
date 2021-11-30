@@ -1,14 +1,13 @@
-import config from './config.js';
+import baseURL from './config.js';
 import './imgs/background.jpg';
 import './imgs/spinner.gif';
 import './style.css';
 
 const form = document.querySelector('.mailForm');
-const spinner = document.querySelector('.noneSpinner');
-const messBox = document.querySelector('.none');
+const spinner = document.querySelector('.spinner');
+const messBox = document.querySelector('.alertMessage');
 
 function showMessage(message) {
-	messBox.classList.add('alertMessage');
 	messBox.classList.remove('none');
 	const mess = document.createTextNode(message);
 	messBox.appendChild(mess);
@@ -20,15 +19,13 @@ function showMessage(message) {
 
 	span.onclick = function() {
 		messBox.replaceChildren();
-		messBox.classList.remove('alertMessage');
 		messBox.classList.add('none');
-		spinner.classList.add('noneSpinner');
-		spinner.classList.remove('spinner');
+		spinner.classList.add('none');
 	};
 }
 
 function sendRequest(data) {
-	fetch(config['address'], {
+	fetch(baseURL, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -62,13 +59,10 @@ function sendRequest(data) {
 }
 
 function retriveFormValue() {
-	spinner.classList.remove('noneSpinner');
-	spinner.classList.add('spinner');
+	spinner.classList.remove('none');
 	const elements = form.elements;
-	const data = {};
-	for (const element of elements) {
-		data[element.name] = element.value;
-	}
+	const data = Object.fromEntries(Array
+		.from(elements, x => [x.name, x.value]));
 	sendRequest(data);
 }
 
