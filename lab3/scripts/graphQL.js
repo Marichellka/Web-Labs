@@ -1,5 +1,5 @@
 import config from './config.js';
-import { displayList } from './script.js';
+import { displayList, showMessage } from './script.js';
 import { createClient as CreateClient, defaultExchanges,
 	subscriptionExchange } from '@urql/core';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
@@ -48,7 +48,7 @@ export async function startExecuteTask(name, variables) {
 
 async function fetchGraphQL(operationName, variables) {
 	const result = await fetch(
-		'https://weblab3.hasura.app/v1/graphql',
+		'https://' + config['address'],
 		{
 			method: 'POST',
 			headers: getHeaders(),
@@ -58,7 +58,9 @@ async function fetchGraphQL(operationName, variables) {
 				operationName,
 			}),
 		},
-	);
+	).catch(() => {
+		showMessage('Network error. Please try again!');
+	});
 	return await result.json();
 }
 
