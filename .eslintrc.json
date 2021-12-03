@@ -3,6 +3,7 @@
     "browser": true,
     "es2021": true
   },
+  "plugins": ["sonarjs"],
   "extends": ["metarhia", "plugin:sonarjs/recommended"],
   "parser": "babel-eslint",
   "parserOptions": {
@@ -10,7 +11,6 @@
   },
   "rules": {
     "sonarjs/cognitive-complexity": ["error", 15],
-    "indent": ["error", "tab"],
-    "no-return-await":0
+    "indent": ["error", "tab"]
   }
 }
