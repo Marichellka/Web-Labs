@@ -12,9 +12,9 @@ label {
    text-decoration: none;
 }
 .slides {
-   height: 30rem;
-  overflow-x: hidden;
-  position: relative;
+   height: 23rem;
+   overflow-x: hidden;
+   position: relative;
 
 }
 
