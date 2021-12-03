@@ -11,11 +11,12 @@ const messBox = document.querySelector('.message');
 
 export function showMessage(message) {
 	messBox.classList.remove('none');
+	spinner.classList.remove('none');
 	const mess = document.createTextNode(message);
 	messBox.appendChild(mess);
 	const span = document.createElement('SPAN');
 	const txt = document.createTextNode('OK');
-	span.className = 'submit';
+	span.classList.add('submit');
 	span.appendChild(txt);
 	messBox.appendChild(span);
 
@@ -39,7 +40,7 @@ export function displayList(list) {
 		}
 		const span = document.createElement('SPAN');
 		const txt = document.createTextNode('\u00D7');
-		span.className = 'close';
+		span.classList.add('close');
 		span.appendChild(txt);
 		li.appendChild(span);
 		ul.appendChild(li);
@@ -52,7 +53,6 @@ export function displayList(list) {
 
 function newElement(event) {
 	event.preventDefault();
-	spinner.classList.remove('none');
 	const li = document.createElement('li');
 	const inputValue = formElements['taskName'].value;
 	const t = document.createTextNode(inputValue);
@@ -60,14 +60,12 @@ function newElement(event) {
 	if (inputValue === '') {
 		showMessage('You must write something!');
 		return;
-	} else {
-		ul.appendChild(li);
 	}
-	formElements['taskName'].value = '';
 
+	formElements['taskName'].value = '';
 	const span = document.createElement('SPAN');
 	const txt = document.createTextNode('\u00D7');
-	span.className = 'close';
+	span.classList.add('close');
 	span.appendChild(txt);
 	li.appendChild(span);
 
@@ -76,17 +74,22 @@ function newElement(event) {
 	};
 	startExecuteTask('addTask', { 'task': {
 		'taskName': inputValue,
-	} });
-	spinner.classList.add('none');
+	} }).then(data => {
+		if (data !== undefined) {
+			ul.appendChild(li);
+		}
+	});
 }
 
 function deleteTask(obj) {
-	spinner.classList.remove('none');
 	const divTask = obj.parentElement;
 	const taskName = divTask.childNodes.item(0).nodeValue;
-	startExecuteTask('deleteTask', { taskName });
-	ul.removeChild(divTask);
-	spinner.classList.add('none');
+	startExecuteTask('deleteTask', { taskName })
+		.then(data => {
+			if (data !== undefined) {
+				ul.removeChild(divTask);
+			}
+		});
 }
 
 spinner.classList.remove('none');
@@ -99,15 +102,17 @@ startExecuteTask('getList', {}).then(data => {
 const list = document.querySelector('ul');
 list.addEventListener('click', ev => {
 	if (ev.target.tagName === 'LI') {
-		spinner.classList.remove('none');
 		const taskName = ev.target.childNodes.item(0).nodeValue;
 		let isCheked = true;
 		if (ev.target.className === 'checked') {
 			isCheked = false;
 		}
-		startExecuteTask('setTaskChecked', { taskName, 'checked': isCheked });
-		spinner.classList.add('none');
-		ev.target.classList.toggle('checked');
+		startExecuteTask('setTaskChecked', { taskName, 'checked': isCheked })
+			.then(data => {
+				if (data !== undefined) {
+					ev.target.classList.toggle('checked');
+				}
+			});
 	}
 }, false);
 

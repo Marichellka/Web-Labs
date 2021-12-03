@@ -60,6 +60,7 @@ async function fetchGraphQL(operationName, variables) {
 		},
 	).catch(() => {
 		showMessage('Network error. Please try again!');
+		return {};
 	});
 	return await result.json();
 }
