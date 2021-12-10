@@ -37,16 +37,16 @@ label {
 }
 
 .slides .slide:nth-of-type(1) {
-   background-image: url("./imgs/1.jpeg");
+   background-image: url("/imgs/1.jpeg");
  }
  .slides .slide:nth-of-type(2) {
-   background-image: url("./imgs/2.jpg");
+   background-image: url("/imgs/2.jpg");
  }
  .slides .slide:nth-of-type(3) {
-   background-image: url("./imgs/3.jpg");
+   background-image: url("/imgs/3.jpg");
  }
  .slides .slide:nth-of-type(4) {
-   background-image: url("../imgs/4.jpg");
+   background-image: url("/imgs/4.jpg");
  }
 
 .slide1_radio:checked ~ .slides .inner {

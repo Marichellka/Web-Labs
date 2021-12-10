@@ -16,6 +16,17 @@
     opacity: 0;
 }
 
+.menu-wrap .backdrop{
+    display: none;
+    background-color: (--transparent);
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
 .menu-wrap .burger{
     position: absolute;
     top: 0;
@@ -52,6 +63,7 @@
 
 .menu-wrap .menu{
     position: fixed;
+    z-index: 3;
     top: 0;
     left: 0;
     height: 100%;
@@ -88,7 +100,9 @@
     transform: rotate(90deg);
 }
 
-
+.menu-wrap .toggler:checked ~ .backdrop{
+    display: block;
+}
 
 .menu-wrap .toggler:checked ~ .menu{
     visibility: visible;
