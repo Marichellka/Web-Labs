@@ -1,0 +1,34 @@
+@use './shared/scss/_shared.scss' as *;
+
+body {
+    display: grid;
+    background-color: $bg-color-blue;
+    min-height: 100vh;
+    grid-template-rows:
+      minmax(15vh, auto)
+      minmax(85vh, auto);
+}
+  
+header{
+    grid-row: 1;
+    color: $bg-color-grey;
+    font-size: 100px;
+    padding-left: 100px;
+    text-align: center;
+}
+
+button {
+  background-color: $bg-color-dark-blue;
+  text-align: center;
+  vertical-align: middle;
+  overflow: hidden;
+  transition-duration: 0.4s;
+  border: none;
+  color: $main-color-white;
+  margin-left: 50px;
+  height: 50px;
+  &:hover {
+    background-color: $bg-color-light-blue;
+    color: $bg-color-dark-blue;
+  }
+}

@@ -1,0 +1,14 @@
+@use '../../shared/scss/_shared.scss' as *;
+
+.spinner {
+    display: flex;
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: $transpered-white 50% 50% no-repeat;
+    justify-content: center;
+    align-items: center;
+}
