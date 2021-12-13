@@ -5,6 +5,8 @@ import { createClient as CreateClient, defaultExchanges,
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { pipe, subscribe } from 'wonka';
 
+const spinner = document.querySelector('.spinner');
+
 export function subscribeToChanges() {
 	const subscriptionClient = new SubscriptionClient(
 		'wss://' + config['address'],
@@ -47,6 +49,7 @@ export async function startExecuteTask(name, variables) {
 }
 
 async function fetchGraphQL(operationName, variables) {
+	spinner.classList.remove('none');
 	const result = await fetch(
 		'https://' + config['address'],
 		{
@@ -62,6 +65,8 @@ async function fetchGraphQL(operationName, variables) {
 		showMessage('Network error. Please try again!');
 		return {};
 	});
+
+
 	return await result.json();
 }
 

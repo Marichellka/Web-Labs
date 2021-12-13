@@ -5,10 +5,11 @@ export const config = {
 					taskName
 					Date
 					Checked
+					id
 				}
 			}
-			mutation deleteTask($taskName: String!) {
-				delete_ToDoList_by_pk(taskName: $taskName) {
+			mutation deleteTask($id: Int!) {
+				delete_ToDoList_by_pk(id: $id) {
 					taskName
 				}
 			}
@@ -17,11 +18,11 @@ export const config = {
 					affected_rows
 				}
 			}
-			mutation setTaskChecked($taskName: String!, 
-			$checked: Boolean!) {
-				update_ToDoList_by_pk(pk_columns: 
-				{taskName: $taskName}, _set: {Checked: $checked}) {
-					Checked
+			mutation setTaskChecked($id: Int!, 
+				$checked: Boolean!) {
+					update_ToDoList_by_pk(pk_columns: 
+					{id: $id}, _set: {Checked: $checked}) {
+						Checked
 				}
 			}`,
 	'subscription': `subscription Subscription { 
@@ -29,6 +30,7 @@ export const config = {
 						Checked
 						Date
 						taskName
+						id
 					}
 				}`,
 };
