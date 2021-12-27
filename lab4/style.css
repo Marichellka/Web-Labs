@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+  --main-color-white: white;
+  --transpered-white: rgba(255, 255, 255, 0.75);
+  --transpered: rgba(255, 255, 255, 1);;
+  --bg-color-blue: #4480a8;
+  --bg-color-grey: #474d59;
+  --bg-color-light-grey: #ccc;
+  font-family: "Apple Chancery", cursive;
+  font-size: 1.5rem;
+}
+body{
+  margin: 0 auto;
+}
