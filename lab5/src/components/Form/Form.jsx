@@ -17,7 +17,7 @@ function Form ({ToDoList, onToggle, deleteTask, onCreate}) {
     return (
         <form className={classes.toDoForm} onSubmit={addHandler}>
             <ul className={classes.list}>
-                {ToDoList.sort((a,b)=>{b.id-a.id}).map(task=> {
+                {ToDoList.sort((a,b)=>(b.id-a.id)).map(task=> {
                     return (
                         <ToDoItem 
                             task={task} 
