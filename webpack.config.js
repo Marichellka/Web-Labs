@@ -3,14 +3,14 @@ const path = require('path');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-	entry: './lab3/scripts/script.js',
+	entry: './lab5/src/index.jsx',
 	output: {
 		filename: 'bundle.[hash].js',
-		path: path.resolve(__dirname, './lab3/dist'),
+		path: path.resolve(__dirname, './lab5/src/dist'),
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: './lab3/index.html',
+			template: './lab5/src/index.html',
 		}),
 		new Dotenv({
 			systemvars: true,
@@ -23,7 +23,7 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.js$/,
+				test: /\.jsx?$/,
 				exclude: /node_modules/,
 				loader: require.resolve('babel-loader'),
 			},
@@ -38,6 +38,25 @@ module.exports = {
 							url: false,
 						},
 					},
+					'postcss-loader',
+				],
+			},
+			{
+				test: /\.s[ac]ss$/i,
+				use: [
+					'style-loader',
+					{
+						loader: 'css-loader',
+						options: {
+							modules: {
+								mode: 'local',
+								localIdentName:
+                                    '[name]__[local]___[hash:base64:5]',
+							},
+						},
+					},
+					'postcss-loader',
+					'sass-loader',
 				],
 			},
 			{
@@ -55,5 +74,8 @@ module.exports = {
 				],
 			},
 		],
+	},
+	stats: {
+		children: true,
 	},
 };
