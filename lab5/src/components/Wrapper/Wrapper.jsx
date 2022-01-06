@@ -7,13 +7,17 @@ import { WebSocketLink } from '@apollo/client/link/ws';
 import config from '../../config.js';
 
 function Wrapper({children}){
-    const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const { loginWithRedirect, isAuthenticated, getAccessTokenSilently } = useAuth0();
     const [bearerToken, setBearerToken] = useState();
 
     useEffect(() => {
-        const getToken = async () => {
-        const token = isAuthenticated ? await getAccessTokenSilently() : '';
-        setBearerToken(token);
+       const getToken = async () => {
+            try{
+                const token = isAuthenticated ? await getAccessTokenSilently() : '';
+                setBearerToken(token);
+            } catch{
+                loginWithRedirect();
+            }
         };
         getToken();
     }, [isAuthenticated, getAccessTokenSilently]);

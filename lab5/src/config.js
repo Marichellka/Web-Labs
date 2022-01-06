@@ -2,10 +2,6 @@ import { gql } from '@apollo/client';
 
 export const config = {
 	'address': 'wss://weblab5.hasura.app/v1/graphql',
-	'auth-domain':'dev-qqsfii-e.us.auth0.com',
-	'auth-client-id':'gdFMs7dzAVmJ8jsb21ngdpY4v9bPdlKW',
-	'auth-callback-uri': 'https://lab5-marichellka.azurewebsites.net',
-	'auth-audience':'https://dev-qqsfii-e.us.auth0.com/api/v2/',
 	'add':gql`mutation addTask($task: ToDoList_insert_input!) {
 				insert_ToDoList(objects: [$task]) {
 					affected_rows

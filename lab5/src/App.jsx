@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useMutation, useSubscription } from '@apollo/client';
 import Form from './components/Form/Form.jsx';
@@ -6,6 +6,7 @@ import Message from './components/Message/Message';
 import Spinner from './components/Spinner/Spinner';
 import config from './config.js';
 import './index.scss';
+
 
 function App () {
     const [checking] = useMutation(config['check']);
@@ -15,26 +16,57 @@ function App () {
     const {
         loginWithRedirect, logout, isAuthenticated, loading: authLoading
     } = useAuth0();
+    const [spinner, setSpinner] = useState(false);
+    const [message, setMessage] = useState(false);
+    const [isoffline, setOffline] = useState(false);
+
+    window.onoffline = () =>{
+        setOffline(true);
+    }
+
+    window.ononline = () =>{
+        setOffline(false);
+    }
 
     function toggleToDo(id, checked){
-        const variables = { 'id':id, 'checked': !checked };
-        checking({ variables });
+        if(isoffline){
+            showMessage();
+        }
+        else{
+            const variables = { 'id':id, 'checked': !checked };
+            checking({ variables });
+        }
     }
 
     function deleteToDo(id){
-        const variables = {'id':id};
-        deleting({ variables });
+        if(isoffline){
+            showMessage();
+        }
+        else{
+            const variables = {'id':id};
+            deleting({ variables });
+        }
     }
 
     function addToDo(inputValue){
-        const variables = {'task':{'taskName': inputValue}};
-        adding({ variables });
+        if(isoffline){
+            showMessage();
+        }
+        else{
+            const variables = {'task':{'taskName': inputValue}};
+            adding({ variables });
+        }
+    }
+
+    function showMessage(){
+        setSpinner(true);
+        setMessage(true);
     }
 
     if (loading || authLoading) {
         return(
             <div>
-                <Spinner/>
+                <Spinner visibility={true}/>
             </div>
         )
     }
@@ -43,7 +75,7 @@ function App () {
         return (
           <header>
               Please log in
-              <button onClick={() => loginWithRedirect()}>Log In</button>
+              <button onClick={loginWithRedirect}>Log In</button>
           </header>
               
         );
@@ -52,8 +84,8 @@ function App () {
     if (error){
         return(
             <div>
-                <Message messageText={'Error :( \n Check your connection'} />
-                <Spinner/>
+                <Message visibility={message} setVisibility={setMessage} />
+                <Spinner visibility={true}/>
             </div>
         )
     }
@@ -62,10 +94,15 @@ function App () {
         <div>
             <header>
                 Stuff I need to do:
-                <button onClick={() => logout()}>Log out</button>
+                <button onClick={logout}>Log out</button>
             </header>
             <Form ToDoList={data.ToDoList} onToggle={toggleToDo} 
             deleteTask={deleteToDo} onCreate={addToDo}/>
+            <Message visibility={message} setVisibility={(state) => {
+                setMessage(state);
+                setSpinner(false);
+            }} />
+            <Spinner visibility={spinner}/>
         </div>
     )
 }

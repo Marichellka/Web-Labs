@@ -1,20 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import classes from './Message.scss';
-import { useState } from 'react/cjs/react.development';
 
-function Message({messageText}){
-    const [messageVisibility, setMessageVisibility] = useState(true);
-
-    return <div className={`${classes.message} ${messageVisibility? ``: classes.none}`} >
-        {messageText}
-        <span onClick={() => setMessageVisibility(false)}>Ok</span>
+function Message({visibility, setVisibility}){
+    return <div className={`${classes.message} ${visibility? ``: classes.none}`} >
+        {'Error :( \n Check your connection'}
+        <span onClick={() => setVisibility(false)}>Ok</span>
         </div>;
 };
 
 Message.propTypes = {
-    messageText: PropTypes.string.isRequired
+    visibility: PropTypes.bool.isRequired,
+    setVisibility: PropTypes.func.isRequired
 }
 
 export default Message;

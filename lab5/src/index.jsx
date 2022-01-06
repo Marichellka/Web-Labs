@@ -3,14 +3,13 @@ import ReactDOM from 'react-dom';
 import { Auth0Provider } from '@auth0/auth0-react';
 import App from './App';
 import Wrapper from './components/Wrapper/Wrapper';
-import config from './config.js';
 
 ReactDOM.render(
   <Auth0Provider
-    domain={config['auth-domain']}
-    clientId={config['auth-client-id']}
-    redirectUri={config['auth-callback-uri']}
-    audience={config['auth-audience']}
+    domain={process.env.AUTH_DOMAIN}
+    clientId={process.env.AUTH_CLIENT_ID}
+    redirectUri={process.env.AUTH_CALLBACK_URI}
+    audience={process.env.AUTH_AUDIENCE}
   >
     <Wrapper>
       <App />
