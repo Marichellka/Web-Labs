@@ -13,6 +13,7 @@ function App () {
     const [adding] = useMutation(config['add']);
     const [deleting] = useMutation(config['delete']);
     const { data, loading, error } = useSubscription(config['subscription']);
+    const [oldData, setData] = useState(data);
     const {
         loginWithRedirect, logout, isAuthenticated, loading: authLoading
     } = useAuth0();
@@ -28,9 +29,15 @@ function App () {
         setOffline(false);
     }
 
+    if (data !== oldData) {
+        setData(data);
+        setSpinner(false);
+    }
+
     function toggleToDo(id, checked){
+        setSpinner(true);
         if(isoffline){
-            showMessage();
+            setMessage(true);
         }
         else{
             const variables = { 'id':id, 'checked': !checked };
@@ -39,8 +46,9 @@ function App () {
     }
 
     function deleteToDo(id){
+        setSpinner(true);
         if(isoffline){
-            showMessage();
+            setMessage(true);
         }
         else{
             const variables = {'id':id};
@@ -49,18 +57,14 @@ function App () {
     }
 
     function addToDo(inputValue){
+        setSpinner(true);
         if(isoffline){
-            showMessage();
+            setMessage(true);
         }
         else{
             const variables = {'task':{'taskName': inputValue}};
             adding({ variables });
         }
-    }
-
-    function showMessage(){
-        setSpinner(true);
-        setMessage(true);
     }
 
     if (loading || authLoading) {
