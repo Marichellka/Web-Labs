@@ -68,8 +68,12 @@ function App () {
     }
 
     if(checkingError || addingError || deletingError || error){
-        setSpinner(true);
-        setMessage(true);
+        return(
+            <div>
+                <Message visibility={message} setVisibility={setMessage}/>
+                <Spinner visibility={true}/>
+            </div>
+        )
     }
 
     if (loading || authLoading) {
