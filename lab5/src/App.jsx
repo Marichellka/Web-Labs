@@ -12,7 +12,7 @@ function App () {
     const [checking , {error:checkingError}] = useMutation(config['check']);
     const [adding, {error:addingError}] = useMutation(config['add']);
     const [deleting, {error:deletingError }] = useMutation(config['delete']);
-    const { data, loading, error} = useSubscription(config['subscription']);
+    const { data, loading, error } = useSubscription(config['subscription']);
     const [oldData, setData] = useState(data);
     const {
         loginWithRedirect, logout, isAuthenticated, loading: authLoading
@@ -67,15 +67,6 @@ function App () {
         }
     }
 
-    if(checkingError || addingError || deletingError || error){
-        return(
-            <div>
-                <Message visibility={message} setVisibility={setMessage}/>
-                <Spinner visibility={true}/>
-            </div>
-        )
-    }
-
     if (loading || authLoading) {
         return(
             <div>
@@ -93,6 +84,20 @@ function App () {
               
         );
     }
+
+    
+
+    if (error || checkingError || addingError || deletingError){
+        setMessage(true);
+        return(
+            <div>
+                <Message visibility={message} setVisibility={setMessage}/>
+                <Spinner visibility={true}/>
+            </div>
+        )
+    }
+
+
 
     return(
         <div>
