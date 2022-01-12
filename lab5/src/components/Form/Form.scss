@@ -1,0 +1,81 @@
+@use '../../shared/scss/_shared.scss' as *;
+
+.toDoForm{
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    margin: 0 50px 50px 50px;
+    max-width: 80%;
+    padding: 40px;
+    background-color: $main-color-white;
+    border-radius: 15px;
+    box-shadow: 4px 4px 8px $bg-color-grey;
+}
+  
+.list {
+  padding: 0;
+  list-style: none;
+  li {
+    cursor: pointer;
+    position: relative;
+    padding: 10px;
+    margin-bottom: 5px;
+    background: $bg-color-superlight-blue;
+    transition: 0.2s;
+  
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    &:nth-child(odd) {
+      background: $bg-color-light-blue;
+    }
+    &:hover {
+      background: $bg-color-blue;
+    }
+  }
+  li.checked {
+    background: $bg-color-mid-blue;
+    color: $main-color-white;
+    text-decoration: line-through;
+  }
+}
+  
+.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 10px;
+  margin-bottom: 5px;
+  &:hover {
+    background-color: $bg-color-grey;
+    color: $main-color-white;
+  }
+}
+  
+.newTask{
+  display: flex;
+  flex-direction: row;
+}
+  
+input {
+  width: 90%;
+  transition-duration: 0.4s;
+  border: 2px solid $bg-color-dark-blue;
+  padding: 10px;    
+}
+  
+button, span {
+  background-color: $bg-color-dark-blue;
+  text-align: center;
+  vertical-align: middle;
+  overflow: hidden;
+  transition-duration: 0.4s;
+  border: none;
+  color: $main-color-white;
+  width: 10%;
+  &:hover {
+    background-color: $bg-color-light-blue;
+    color: $bg-color-dark-blue;
+  }
+}
